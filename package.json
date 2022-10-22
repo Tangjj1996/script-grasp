@@ -2,8 +2,10 @@
   "name": "script-grasp",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {},
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsx script/build.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
