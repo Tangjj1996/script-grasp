@@ -4,6 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
+    "start": "tsx src/index.ts",
     "build": "tsx script/build.ts"
   },
   "keywords": [],
