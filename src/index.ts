@@ -1,15 +1,21 @@
 import puppeteer from "puppeteer";
-import { program } from "commander";
+import ora from "ora";
 import fs from "fs";
+import chalk from "chalk";
+import { program } from "commander";
 
 import type { Page } from "puppeteer";
+import type { Ora } from "ora";
 
 const defaultUrl = "https://www.yuque.com/weijin_is_wiki/ykf0s9/fxbfgc";
 
-program.option("-p --path <char>", "add url path", defaultUrl);
+program.option("-p, --path <char>", "add url path", defaultUrl);
+program.option("-d, --directory <char>", "add store directory", "build");
 program.parse();
 
-const { path: urlPath } = program.opts();
+let spinner: Ora;
+
+const { path: urlPath, directory } = program.opts();
 
 /**
  *
@@ -40,18 +46,24 @@ async function generatePDF(page: Page, url: string) {
       );
     }
   });
-  if (!fs.existsSync("dist")) {
-    fs.mkdirSync("dist");
+  if (!fs.existsSync(directory)) {
+    fs.mkdirSync(directory);
   }
-  await page.pdf({ path: `dist/${title}.pdf` });
+  await page.pdf({ path: `${directory}/${title}.pdf` });
+  spinner.succeed();
 }
 
 /**
  * startup
  */
 async function main() {
-  const browser = await puppeteer.launch({ headless: false });
+  const browser = await puppeteer.launch();
   const page = await browser.newPage();
+  spinner = ora(
+    `正在进行网页转pdf, 当前url [${chalk.green(
+      urlPath
+    )}] 当前存放地址 [${chalk.green(directory)}]`
+  ).start();
   await generatePDF(page, urlPath);
   await browser.close();
 }
