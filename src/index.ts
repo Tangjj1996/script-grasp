@@ -32,11 +32,11 @@ async function generatePDF(page: Page, url: string) {
     waitUntil: "networkidle0",
   });
 
-  const resultsSelector = "#article-title";
-  await page.waitForSelector(resultsSelector);
-  const title = await page.evaluate((resultsSelector) => {
-    return document.querySelector(resultsSelector)?.textContent;
-  }, resultsSelector);
+  let title = await page.evaluate(() => {
+    return document.title;
+  });
+
+  title = title.replace(/[\\/]/g, "-");
 
   await page.evaluate(async () => {
     const { scrollHeight } = document.body;
