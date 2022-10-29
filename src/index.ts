@@ -1,5 +1,6 @@
 import puppeteer from "puppeteer";
 import { program } from "commander";
+import fs from "fs";
 
 import type { Page } from "puppeteer";
 
@@ -39,6 +40,9 @@ async function generatePDF(page: Page, url: string) {
       );
     }
   });
+  if (!fs.existsSync("dist")) {
+    fs.mkdirSync("dist");
+  }
   await page.pdf({ path: `dist/${title}.pdf` });
 }
 
@@ -49,7 +53,7 @@ async function main() {
   const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
   await generatePDF(page, urlPath);
-  // await browser.close();
+  await browser.close();
 }
 
 main();
