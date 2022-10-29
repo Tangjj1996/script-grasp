@@ -26,6 +26,7 @@ async function generatePDF(page: Page, url: string) {
   await page.goto(url, {
     waitUntil: "networkidle0",
   });
+
   const resultsSelector = "#article-title";
   await page.waitForSelector(resultsSelector);
   const title = await page.evaluate((resultsSelector) => {
@@ -46,9 +47,13 @@ async function generatePDF(page: Page, url: string) {
       );
     }
   });
+
+  spinner.text = `文章标题是[${chalk.green(title)}]`;
+
   if (!fs.existsSync(directory)) {
     fs.mkdirSync(directory);
   }
+
   await page.pdf({ path: `${directory}/${title}.pdf` });
   spinner.succeed();
 }
