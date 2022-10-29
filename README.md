@@ -4,13 +4,9 @@
 
 ### 1. 配置环境
 
-- 安装 git
+- [安装 git](https://git-scm.com/)
 
-[安装地址](https://git-scm.com/)
-
-- 安装 node
-
-[安装地址](https://nodejs.org/en/)
+- [安装 node](https://nodejs.org/en/)
 
 - 安装 pnpm
 
