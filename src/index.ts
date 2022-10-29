@@ -1,11 +1,30 @@
 import puppeteer from "puppeteer";
+import { program } from "commander";
 
-async function main() {
-  const browser = await puppeteer.launch({ headless: false, devtools: false });
-  const page = await browser.newPage();
-  await page.goto("https://www.yuque.com/weijin_is_wiki/ykf0s9/fxbfgc", {
+import type { Page } from "puppeteer";
+
+const defaultUrl = "https://www.yuque.com/weijin_is_wiki/ykf0s9/fxbfgc";
+
+program.option("-p --path <char>", "add url path", defaultUrl);
+program.parse();
+
+const { path: urlPath } = program.opts();
+
+/**
+ *
+ * @param page puppeteer instance property `puppeteer.Page`
+ * @param url `string`
+ */
+async function generatePDF(page: Page, url: string) {
+  await page.goto(url, {
     waitUntil: "networkidle0",
   });
+  const resultsSelector = "#article-title";
+  await page.waitForSelector(resultsSelector);
+  const title = await page.evaluate((resultsSelector) => {
+    return document.querySelector(resultsSelector)?.textContent;
+  }, resultsSelector);
+
   await page.evaluate(async () => {
     const { scrollHeight } = document.body;
     const STEP = 1000;
@@ -20,8 +39,17 @@ async function main() {
       );
     }
   });
-  await page.pdf({ path: "dist/1.pdf" });
-  await browser.close();
+  await page.pdf({ path: `dist/${title}.pdf` });
+}
+
+/**
+ * startup
+ */
+async function main() {
+  const browser = await puppeteer.launch({ headless: false });
+  const page = await browser.newPage();
+  await generatePDF(page, urlPath);
+  // await browser.close();
 }
 
 main();

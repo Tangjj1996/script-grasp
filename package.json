@@ -8,9 +8,13 @@
     "build": "tsx script/build.ts"
   },
   "keywords": [],
-  "author": "",
+  "author": {
+    "name": "@gujianjie",
+    "email": "awesometangji@gmail.com"
+  },
   "license": "ISC",
   "dependencies": {
+    "commander": "^9.4.1",
     "puppeteer": "^19.1.0"
   },
   "devDependencies": {

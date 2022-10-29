@@ -5,5 +5,4 @@ esbuild.build({
   outdir: "dist",
   format: "cjs",
   platform: "node",
-  bundle: true,
 });
