@@ -1,8 +1,8 @@
 import esbuild from "esbuild";
 
 esbuild.build({
-  entryPoints: ["./src/index.ts"],
+  entryPoints: ["src/index.ts"],
   outdir: "dist",
-  format: "cjs",
+  format: "esm",
   platform: "node",
 });
