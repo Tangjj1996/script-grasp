@@ -8,9 +8,14 @@ import type { Page } from "puppeteer";
 import type { Ora } from "ora";
 
 const defaultUrl = "https://www.yuque.com/weijin_is_wiki/ykf0s9/fxbfgc";
+const defaultDirectory = "build";
 
 program.option("-p, --path <char>", "add url path", defaultUrl);
-program.option("-d, --directory <char>", "add store directory", "build");
+program.option(
+  "-d, --directory <char>",
+  "add store directory",
+  defaultDirectory
+);
 program.parse();
 
 let spinner: Ora;

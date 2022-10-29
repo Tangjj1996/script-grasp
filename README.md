@@ -40,4 +40,13 @@ pnpm build
 node dist/index.js -p [url] -d [directory]
 ```
 
+- url 默认 https://www.yuque.com/weijin_is_wiki/ykf0s9/fxbfgc
+- directory 默认 build
+
+eg
+
+```
+node dist/index.js -p https://www.yuque.com/weijin_is_wiki/ykf0s9/aag394 -d doc
+```
+
 🎉
